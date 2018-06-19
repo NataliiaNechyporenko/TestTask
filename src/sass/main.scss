@@ -2,3 +2,107 @@
    Import partials below
 */
 @import 'reset.scss';
+@import 'fonts';
+@import 'variables';
+
+%secondary-text {
+  color: $secondary-text;
+  font-family: $text-font;
+  font-size: 15px;
+  line-height: 20px;
+  margin-bottom: 18px;
+}
+
+.page-container {
+  margin: 0 auto;
+  max-width: 1200px;
+  background-color: $theme-primary;
+}
+
+.contant-container {
+  background-color: $white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  margin: -80px auto;
+  max-width: 960px;
+  position: relative;
+  z-index: 99;
+}
+
+.post {
+  border-bottom: $post-border;
+  padding: 48px 80px;
+
+    &__title {
+      border-bottom: $post-border;
+      color: $primary-text;
+      display: block;
+      font-family: $title-font;
+      font-size: 38px;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      position: relative;
+
+      &:before {
+        content: '';
+        color: $theme-secondary;
+        display: inline-block;
+        background-image: url('../images/star.svg');
+        height: 32px;
+        line-height: 1.2;
+        position: absolute;
+        top: 5px;
+        left: -56px;
+        width: 32px;
+      }
+    }
+
+    &__pubdate {
+      @extend %secondary-text;
+      display: block;
+    }
+
+    &__contant {
+      border-bottom: $post-border;
+    }
+
+    &__text {
+      display: block;
+      color: $primary-text;
+      font-family: $text-font;
+      font-size: 17px;
+      line-height: 25px;
+      margin-bottom: 40px;
+      text-align: justify;
+    }
+
+
+
+    &__img {
+      border: 5px solid $theme-primary;
+      border-left: none;
+      display: block;
+      height: auto;
+      margin-left: -80px;
+      margin-right: 24px;
+      max-width: 365px;
+      float: left;
+    }
+
+    &__info {
+      border-bottom: $post-border;
+      padding: 20px 0;
+    }
+
+    &__info-text {
+      @extend %secondary-text;
+      display: inline-block;
+      margin-bottom: 0;
+      margin-right: 56px;
+
+      &--bold {
+        @extend %secondary-text;
+        display: inline-block;
+        margin-bottom: 0;
+      }
+    }
+}

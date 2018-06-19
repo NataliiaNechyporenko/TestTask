@@ -3,6 +3,9 @@ const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
 const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
+const babel = require('gulp-babel');
+const uglify = require('gulp-uglify');
+const concat = require('gulp-concat');
 const cssnano = require('gulp-cssnano');
 const mmq = require('gulp-merge-media-queries');
 const del = require('del');
@@ -55,7 +58,7 @@ gulp.task('css', () => {
 
 // Создаем таск для сборки js файлов
 gulp.task('js', () => {
-  return gulp.src('./src/js/script.js')
+  return gulp.src('./src/js/*.js')
   .pipe(concat('scripts.min.js'))
   .pipe(babel({
       presets: ['env']
