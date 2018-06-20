@@ -10,7 +10,6 @@
   font-family: $text-font;
   font-size: 15px;
   line-height: 20px;
-  margin-bottom: 18px;
 }
 
 .page-container {
@@ -22,22 +21,22 @@
 .contant-container {
   background-color: $white;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  margin: -80px auto;
-  max-width: 960px;
+  margin: -86px auto;
+  max-width: 940px;
+  padding: 0 80px;
   position: relative;
   z-index: 99;
 }
 
 .post {
-  border-bottom: $post-border;
-  padding: 48px 80px;
+  padding: 44px 0;
 
     &__title {
       border-bottom: $post-border;
       color: $primary-text;
       display: block;
       font-family: $title-font;
-      font-size: 38px;
+      font-size: 28px;
       line-height: 1.2;
       margin-bottom: 8px;
       position: relative;
@@ -50,7 +49,7 @@
         height: 32px;
         line-height: 1.2;
         position: absolute;
-        top: 5px;
+        top: 0px;
         left: -56px;
         width: 32px;
       }
@@ -58,6 +57,7 @@
 
     &__pubdate {
       @extend %secondary-text;
+      margin-bottom: 9px;
       display: block;
     }
 
@@ -71,38 +71,185 @@
       font-family: $text-font;
       font-size: 17px;
       line-height: 25px;
-      margin-bottom: 40px;
+      margin-bottom: 25px;
       text-align: justify;
     }
-
-
 
     &__img {
       border: 5px solid $theme-primary;
       border-left: none;
+      box-sizing: border-box;
       display: block;
       height: auto;
       margin-left: -80px;
-      margin-right: 24px;
-      max-width: 365px;
+      margin-right: 20px;
+      max-width: 376px;
       float: left;
     }
 
     &__info {
       border-bottom: $post-border;
-      padding: 20px 0;
+      padding: 14px 0;
     }
 
     &__info-text {
       @extend %secondary-text;
       display: inline-block;
       margin-bottom: 0;
-      margin-right: 56px;
+      margin-right: 58px;
+
+      .fas {
+        line-height: 20px;
+        margin: 0 2px;
+      }
 
       &--bold {
         @extend %secondary-text;
         display: inline-block;
+        font-weight: bold;
         margin-bottom: 0;
       }
     }
+}
+
+.avatar {
+  border: 2px solid $third-grey;
+  border-radius: 4px;
+  display: block;
+  flex: 1 1 88px;
+  margin-right: 24px;
+  max-height: 88px;
+  max-width: 88px;
+  padding: 2px;
+
+  &__img {
+    border-radius: 4px;
+    display: block;
+    height: auto;
+    width: 100%;
+  }
+}
+
+.leave-comment {
+  border-bottom: $post-border;
+  display: flex;
+  justify-content: stretch;
+  flex-wrap: wrap;
+
+  &__title {
+    color: $primary-text;
+    display: block;
+    font-family: $title-font;
+    font-size: 28px;
+    line-height: 1.2;
+    margin-bottom: 30px;
+    width: 100%;
+  }
+
+  &__contant {
+    display: flex;
+    justify-content: flex-end;
+    flex: 8 1 300px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  &__textarea {
+    border: $post-border;
+    border-radius: 14px;
+    display: block;
+    margin-bottom: 10px;
+    min-height: 86px;
+    padding: 16px;
+    width: 100%;
+
+    &::placeholder {
+      color: $placeholder-text;
+      font-family: $text-font;
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.btn {
+  border: 0;
+  border-radius: 4px;
+  background-color: $theme-secondary;
+  color: $primary-text;
+  font-family: $text-font;
+  font-size: 17px;
+  padding: 15px 51px;
+}
+
+.comment {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 40px;
+
+  &__body {
+    display: flex;
+    justify-content: flex-start;
+    flex: 8 1 300px;
+    flex-wrap: wrap;
+  }
+
+  &__username {
+    color: $primary-text;
+    font-family: $text-font;
+    font-size: 17px;
+    padding-right: 10px;
+  }
+
+  &__text {
+    display: block;
+    color: $primary-text;
+    font-family: $text-font;
+    font-size: 17px;
+    padding: 14px 0;
+    width: 100%;
+  }
+
+  &__time {
+    @extend %secondary-text;
+    
+    &--bold {
+      @extend %secondary-text;
+      display: inline-block;
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+  }
+
+  &__btnblock {
+    width: 100%;
+  }
+}
+
+.additional-btn {
+  border: none;
+  background-color: transparent;
+  color: $secondary-text;
+  font-family: $text-font;
+  font-size: 17px;
+  margin-right: 10px;
+}
+
+.add-reply-block {
+  padding: 20px 0;
+  width: 100%;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.reply__to {
+  @extend %secondary-text;
+  display: block;
 }
