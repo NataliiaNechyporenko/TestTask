@@ -65,7 +65,9 @@ gulp.task('js', () => {
   }))
   .pipe(uglify())
   .pipe(gulp.dest('./dist'))
-  .pipe(browserSync.reload({stream: true}));
+  .pipe(browserSync.reload({
+    stream: true
+  }));
 });
 
 // Создаем таск для оптимизации картинок
@@ -105,7 +107,7 @@ gulp.task('watch', () => {
   // Следим за изменениями в любом sass файле и вызываем таск 'css' на каждом изменении
   gulp.watch('./src/sass/**/*.scss', ['css']);
   //js
-  gulp.watch('./src/sass/**/*.js', ['js']);
+  gulp.watch('./src/js/**/*.js', ['js']);
   // Следим за изменениями картинок и вызываем таск 'img' на каждом изменении
   gulp.watch('./src/images/**/*.*', ['img']);
   // Следим за изменениями в шрифтах и вызываем таск 'fonts' на каждом изменении
