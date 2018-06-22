@@ -240,9 +240,9 @@
 }
 
 .add-reply-block {
-  display: flex;
   justify-content: space-between;
   flex-direction: column;
+  display: none;
   padding: 20px 0;
   width: 100%;
 

@@ -52,12 +52,12 @@
                     <img src="./images/avatar.jpg" alt="Your photo" class="avatar__img">
                 </div>
                 <div class="leave-comment__contant">
-                    <textarea name="add-comment" id="add-comment" cols="30" rows="3" placeholder="Your message" class="leave-comment__textarea"></textarea>
-                    <button class="btn">Send</button>
+                    <textarea name="add-comment" id="commentText" cols="30" rows="3" placeholder="Your message" class="leave-comment__textarea"></textarea>
+                    <button class="btn addCommentBtn">Send</button>
                 </div>
             </div>
             <div class="comments">
-                <div class="comment">
+                <!-- <div class="comment">
                     <div class="avatar">
                         <img src="./images/avatar.jpg" alt="Your photo" class="avatar__img">
                     </div>
@@ -78,6 +78,7 @@
                             <textarea name="add-comment" id="add-comment" cols="30" rows="3" class="leave-comment__textarea"></textarea>
                             <button class="btn add-reply-block__btn">Send</button>
                         </div>
+
                         <div class="reply">
                             <div class="avatar">
                                 <img src="./images/avatar.jpg" alt="Your photo" class="avatar__img">
@@ -89,11 +90,49 @@
                                 <p class="comment__text">If not everyone makes money blogging, why is blogging so popular?</p>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
     </div>
+    <script type="text/template" id="reply-template">
+        <div class="reply">
+            <img src="./images/avatar.jpg" alt="Your photo" class="avatar">
+            <div class="reply__body">
+                <p class="comment__username"><%= author.name %></p>
+                <p class="reaply__to"><%= to %></p>                   
+                <p class="comment__time"><span><%= created_at %></span> at <span>13:57</span></p>
+                <p class="comment__text"><%= content %></p>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="comment-template">
+        <div class="comment">
+            <div class="avatar">
+                <img src=<%= author.avatar %> alt="Your photo" class="avatar__img">
+            </div>
+            <div class="comment__body">
+                <p class="comment__username"><%= author.name %></p>                    
+                <p class="comment__time"><span class="comment__time--bold"><%= created_at %></span> at <span class="comment__time--bold">13:57</span></p>
+                <p class="comment__text"><%= content %></p>
+                <div class="comment__btnblock">
+                    <button class="additional-btn"><i class="far fa-edit"></i> Edit</button>
+                    <button class="additional-btn"><i class="fas fa-times"></i> Delete</button>
+                    <button class="additional-btn replyBtn" id=<%= 'replyTo'+id %> > <i class="fas fa-reply"></i> Reply</button>
+                </div>
+                <div class="add-reply-block" id=<%= 'addreplyTo'+id %>>
+                    <div class="add-reaply-block__header">
+                        <p class="reply__to"><i class="fas fa-reply"></i> Kurt Thompson</p>
+                        <button class="additional-btn cancelReplyBtn" id=<%= 'cancelReply'+id %>>Cancel</button> 
+                    </div>
+                    <textarea name="add-comment" id="add-comment" cols="30" rows="3" class="leave-comment__textarea"></textarea>
+                    <button class="btn">Send</button>
+                </div>
+                <div class="replyes__container"><%= replyes %></div>
+            </div>
+        </div>
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
     <script src="scripts.min.js"></script>
 </body>
 </html>
