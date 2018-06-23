@@ -1,65 +1,48 @@
-console.log('hello!');
 const commentUrl = 'http://frontend-test.pingbull.com/pages/ns.nechyporenko@gmail.com/comments';
 const comments = document.querySelector('.comments');
+let count = 5;
+let commentsData = [];
+let currentUser = {
+  id: 1,
+};
 
 let buttons = {
   "replyBtn": (event) => {
-    const replyBtn = event.target.id;
-    const addReplyBlock = document.getElementById(`add${replyBtn}`);
+    const replyBtn = parseInt(event.target.id);
+    const addReplyBlock = document.getElementById(`${replyBtn}addreplyTo`);
     addReplyBlock.style.display = "flex";
   },
   "cancelReplyBtn": (event) => {
-    const cancelReplyBtn = event.target.id.slice(11);
-    const addReplyBlock = document.getElementById(`addreplyTo${cancelReplyBtn}`);
+    const cancelReplyBtn = parseInt(event.target.id);
+    const addReplyBlock = document.getElementById(`${cancelReplyBtn}addreplyTo`);
+    const cancelEditBlock = document.getElementById(`${cancelReplyBtn}editBlock`);
     console.log(addReplyBlock);
     addReplyBlock.style.display = "none";
+    cancelEditBlock.style.display = "none";
   },
   "addCommentBtn": (event) => {
     addComment(event);
-  }
-};
+  },
+  "deleteBtn": (event) => {
+    deleteComment(event);
+  },
+  "editBtn": (event) => {
+    let commentId = parseInt(event.target.id);
+    const editCommentBlock = document.getElementById(`${commentId}editBlock`);
+    editCommentBlock.style.display = "flex";
+    let content = document.getElementById(`${commentId}editCommentText`);
+    let commentToEdit = commentsData.filter(comment => comment.id === commentId);
 
-function renderComment(comment) {
-  if (comment.children) {
-    let replyes = comment.children.map(reply => {
-      reply.to = comment.author.name;
-      return renderReply(reply);
-    }).join('');
-    comment.replyes = replyes;
-  }
-  const tmpl = _.template(document.getElementById('comment-template').innerHTML);
-  let compiled = tmpl(comment);
-  let div = document.createElement("div");
-  div.setAttribute("id", ("comment-" + comment.id));
-  div.innerHTML = compiled;
-  comments.appendChild(div);
+    content.value = commentToEdit[0].content;
+  },
+  "sendEditComment": (event) => {
+    editComment(event)
+  },
+  "load-more": (event) => {
+    count += 5;
+    getComments();
+  },
 };
-
-function renderReply(reply) {
-  const replyTmpl = _.template(document.getElementById('reply-template').innerHTML);
-  let replyWrapper = document.createElement("div");
-  replyWrapper.setAttribute("id", ("reply-" + reply.id));
-  replyWrapper.innerHTML = replyTmpl(reply);
-  return replyWrapper.innerHTML;
-};
-
-const getComments = () => {
-    fetch(commentUrl)
-        .then(response => {
-            if(response.ok) {
-                return response.json();
-            }
-            throw new Error('Error fetching' + response.statusText);
-        })
-        .then(data => {
-          comments.innerHTML = '';
-          document.querySelector('#commentText').innerHTML = '';
-          data.forEach((comment) => {
-              renderComment(comment);
-          });
-        })
-        .catch(err => console.log(err))
-  };
 
 let btnHandler = () => {
   let target = event.target;
@@ -70,20 +53,87 @@ let btnHandler = () => {
    };
 };
 
-document.addEventListener("click", btnHandler);
+function isCurrentUser(comment) {
+  let btnEdit = document.getElementById(`${comment.id}Edit`);
+  let btnDelete = document.getElementById(`${comment.id}Delete`);
 
-function addComment() {
-  console.log('clicked send')
+  if (comment.author.id !== currentUser.id) {
+    btnEdit.style.display = "none";
+    btnDelete.style.display = "none";
+  };
+};
+
+function renderComment(comment) {
+  if (comment.children) {
+    let replyes = comment.children.map(reply => {
+      reply.to = comment.author.name;
+      return renderReply(reply);
+    }).join('');
+    comment.replyes = replyes;
+  }
+
+  const tmpl = _.template(document.getElementById('comment-template').innerHTML);
+  let compiled = tmpl(comment);
+  let div = document.createElement("div");
+
+  div.setAttribute("id", ("comment-" + comment.id));
+  div.innerHTML = compiled;
+  comments.appendChild(div);
+};
+
+function renderReply(reply) {
+  const replyTmpl = _.template(document.getElementById('reply-template').innerHTML);
+  let replyWrapper = document.createElement("div");
+
+  replyWrapper.setAttribute("id", ("reply-" + reply.id));
+  replyWrapper.innerHTML = replyTmpl(reply);
+  return replyWrapper.innerHTML;
+};
+
+const getComments = () => {
+  comments.innerHTML = '';
+  document.querySelector('#commentText').value = '';
+  
+  fetch(`${commentUrl}?count=${count}`)
+        .then(response => {
+            if(response.ok) {
+                return response.json();
+            }
+            throw new Error('Error fetching' + response.statusText);
+        })
+        .then(data => {
+          commentsData = data.slice();
+
+          data.map((comment) => {
+              renderComment(comment);
+              isCurrentUser(comment);
+          });
+        })
+        .catch(err => console.log(err))
+};
+
+function addComment(event) {
+  let parentCommentId = parseInt(event.target.id);
   let newComment = {};
   let content = document.querySelector('#commentText').value;
-  if (content) {
+  let replyContent = document.getElementById(`${parentCommentId}addReply`).value;
+
+  if (content || replyContent) {
     newComment.headers = {
       'Content-Type': 'application/json'
     };
     newComment.method = "POST";
-    newComment.body = JSON.stringify({
-      "content": content,
-    });
+
+    if (parentCommentId !== NaN) {
+      newComment.body = JSON.stringify({
+        "content": replyContent,
+        "parent": parentCommentId,
+      });
+    } else {
+      newComment.body = JSON.stringify({
+        "content": content,
+      });
+    };
 
     fetch(commentUrl, newComment)
     .then(response => {
@@ -93,11 +143,59 @@ function addComment() {
         throw new Error("Error fetching data. Response status: " + response.status + " : " + response.statusText);
       }
     })
-    .then(getComments()).then(window.location.reload())
+    .then(getComments)
     .catch(err => {
       console.error("Error: ", err);
     });
   };
 };
 
-getComments();
+function deleteComment(event) {
+  let commentId = parseInt(event.target.id);
+
+  fetch(`${commentUrl}/${commentId}`, {
+    method: 'delete',
+  })
+  .then(response => {
+    if (response.ok) {
+      getComments();
+    } else {
+      throw new Error("Error fetching data. Response status: " + response.status + " : " + response.statusText);
+    }
+  })
+  .catch(err => {
+    console.error("Error: ", err);
+  });
+};
+
+function editComment(event) {
+  let editedComment = {};
+  let commentId = parseInt(event.target.id);
+  let content = document.getElementById(`${commentId}editCommentText`).value;
+
+  if (content) {
+    editedComment.headers = {
+      'Content-Type': 'application/json'
+    };
+    editedComment.method = "PUT";
+    editedComment.body = JSON.stringify({
+        "content": content,
+      });
+  };
+
+  fetch(`${commentUrl}/${commentId}`, editedComment)
+  .then(response => {
+    if (response.ok) {
+      getComments()
+    } else {
+      throw new Error("Error fetching data. Response status: " + response.status + " : " + response.statusText);
+    }
+  })
+  .catch(err => {
+    console.error("Error: ", err);
+  });
+};
+
+window.onload = getComments();
+document.addEventListener("click", btnHandler);
+

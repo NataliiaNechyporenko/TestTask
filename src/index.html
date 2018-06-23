@@ -53,59 +53,31 @@
                 </div>
                 <div class="leave-comment__contant">
                     <textarea name="add-comment" id="commentText" cols="30" rows="3" placeholder="Your message" class="leave-comment__textarea"></textarea>
-                    <button class="btn addCommentBtn">Send</button>
+                    <button class="btn addCommentBtn" id="new">Send</button>
                 </div>
             </div>
             <div class="comments">
-                <!-- <div class="comment">
-                    <div class="avatar">
-                        <img src="./images/avatar.jpg" alt="Your photo" class="avatar__img">
-                    </div>
-                    <div class="comment__body">
-                        <p class="comment__username">Kurt Thompson</p>                    
-                        <p class="comment__time"><span class="comment__time--bold">2015-07-06</span> at <span class="comment__time--bold">13:57</span></p>
-                        <p class="comment__text">If not everyone makes money blogging, why is blogging so popular?</p>
-                        <div class="comment__btnblock">
-                            <button class="additional-btn"><i class="far fa-edit"></i> Edit</button>
-                            <button class="additional-btn"><i class="fas fa-times"></i> Delete</button>
-                            <button class="additional-btn"><i class="fas fa-reply"></i> Reply</button>
-                        </div>
-                        <div class="add-reply-block">
-                            <div class="add-reply-block__header">
-                                <p class="reply__to"><i class="fas fa-reply"></i> Kurt Thompson</p>
-                                <button class="additional-btn"><i class="fas fa-times"></i> Cancel</button> 
-                            </div>
-                            <textarea name="add-comment" id="add-comment" cols="30" rows="3" class="leave-comment__textarea"></textarea>
-                            <button class="btn add-reply-block__btn">Send</button>
-                        </div>
-
-                        <div class="reply">
-                            <div class="avatar">
-                                <img src="./images/avatar.jpg" alt="Your photo" class="avatar__img">
-                            </div>                            
-                            <div class="reply__body">
-                                <p class="comment__username">Sarah Fleming</p>
-                                <p class="reply__to"><i class="fas fa-reply"></i> Kurt Thompson</p>                   
-                                <p class="comment__time"><span>2015-07-06</span> at <span>13:57</span></p>
-                                <p class="comment__text">If not everyone makes money blogging, why is blogging so popular?</p>
-                            </div>
-                        </div>
-                    </div> -->
-                </div>
+               
             </div>
+            <button class="load-more" id="loadMore">Load more</button>
         </div>
     </div>
+
     <script type="text/template" id="reply-template">
         <div class="reply">
             <img src="./images/avatar.jpg" alt="Your photo" class="avatar">
             <div class="reply__body">
                 <p class="comment__username"><%= author.name %></p>
-                <p class="reaply__to"><%= to %></p>                   
-                <p class="comment__time"><span><%= created_at %></span> at <span>13:57</span></p>
+                <p class="reaply__to"><i class="fas fa-reply"></i> <%= to %></p>
+                <p class="comment__time"><i class="far fa-clock fa-sm"></i> <span><%= created_at.slice(0, 10) %></span> at <span><%= created_at.slice(12, 16) %></span></p>
                 <p class="comment__text"><%= content %></p>
+            </div>
+            <div class="comment__btnblock">
+                <button class="additional-btn deleteBtn" id=<%= id + 'Delete' %>><i class="fas fa-times"  ></i> Delete</button>
             </div>
         </div>
     </script>
+
     <script type="text/template" id="comment-template">
         <div class="comment">
             <div class="avatar">
@@ -113,21 +85,32 @@
             </div>
             <div class="comment__body">
                 <p class="comment__username"><%= author.name %></p>                    
-                <p class="comment__time"><span class="comment__time--bold"><%= created_at %></span> at <span class="comment__time--bold">13:57</span></p>
+                <p class="comment__time"><i class="far fa-clock fa-sm"></i> <span><%= created_at.slice(0, 10) %></span> at <span><%= created_at.slice(12, 16) %></span></p>
                 <p class="comment__text"><%= content %></p>
                 <div class="comment__btnblock">
-                    <button class="additional-btn"><i class="far fa-edit"></i> Edit</button>
-                    <button class="additional-btn"><i class="fas fa-times"></i> Delete</button>
-                    <button class="additional-btn replyBtn" id=<%= 'replyTo'+id %> > <i class="fas fa-reply"></i> Reply</button>
+                    <button class="additional-btn editBtn" id=<%= id + 'Edit' %>><i class="far fa-edit" ></i> Edit</button>
+                    <button class="additional-btn deleteBtn" id=<%= id + 'Delete' %>><i class="fas fa-times"  ></i> Delete</button>
+                    <button class="additional-btn replyBtn" id=<%= id + 'replyTo' %> > <i class="fas fa-reply"></i> Reply</button>
                 </div>
-                <div class="add-reply-block" id=<%= 'addreplyTo'+id %>>
+
+                <div class="add-reply-block" id=<%= id + 'addreplyTo' %>>
                     <div class="add-reaply-block__header">
-                        <p class="reply__to"><i class="fas fa-reply"></i> Kurt Thompson</p>
-                        <button class="additional-btn cancelReplyBtn" id=<%= 'cancelReply'+id %>>Cancel</button> 
+                        <p class="reply__to" id = <%= id + 'author' %> ><i class="fas fa-reply"></i> <%= author.name %></p>
+                        <button class="additional-btn cancelReplyBtn" id=<%= id + 'cancelReply' %>>Cancel</button> 
                     </div>
-                    <textarea name="add-comment" id="add-comment" cols="30" rows="3" class="leave-comment__textarea"></textarea>
-                    <button class="btn">Send</button>
+                    <textarea name="add-comment" id=<%= id + 'addReply' %> cols="30" rows="3" class="leave-comment__textarea" ></textarea>
+                    <button class="btn addCommentBtn" id=<%= id + 'sendReply' %> > Send</button>
                 </div>
+
+                <div class="edit-block" id=<%= id + 'editBlock' %>>
+                    <div class="edit-block__header">
+                        <p class="reply__to"><i class="fas fa-reply"></i>Edit comment</p>
+                        <button class="additional-btn cancelReplyBtn" id=<%= id + 'cancelReply' %>>Cancel</button> 
+                    </div>
+                    <textarea name="edit-comment" id=<%= id + 'editCommentText' %> cols="30" rows="3" class="leave-comment__textarea" ></textarea>
+                    <button class="btn sendEditComment" id=<%= id + 'sendEdit' %> >Send</button>
+                </div>
+
                 <div class="replyes__container"><%= replyes %></div>
             </div>
         </div>

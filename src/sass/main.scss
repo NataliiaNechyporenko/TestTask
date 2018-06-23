@@ -184,6 +184,7 @@
   font-family: $text-font;
   font-size: 17px;
   padding: 15px 51px;
+  cursor: pointer;
 }
 
 .comment {
@@ -234,12 +235,14 @@
   border: none;
   background-color: transparent;
   color: $secondary-text;
+  cursor: pointer;
   font-family: $text-font;
   font-size: 17px;
   margin-right: 10px;
 }
 
-.add-reply-block {
+.add-reply-block,
+.edit-block {
   justify-content: space-between;
   flex-direction: column;
   display: none;
