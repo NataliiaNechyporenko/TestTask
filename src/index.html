@@ -13,7 +13,6 @@
 <body>
     <div class="page-container">
         <div class="header-img">
-            <img src="./images/2bg1200.jpg" alt="Post background">
         </div>
         <div class="contant-container">
             <article class="post">
@@ -57,23 +56,24 @@
                 </div>
             </div>
             <div class="comments">
-               
+
             </div>
-            <button class="load-more" id="loadMore">Load more</button>
+            <div class="load-more__container">
+                <button class="load-more" id="loadMore">load more comments</button>
+            </div>
         </div>
     </div>
 
     <script type="text/template" id="reply-template">
         <div class="reply">
-            <img src="./images/avatar.jpg" alt="Your photo" class="avatar">
+            <div class="avatar reply-avatar">
+                <img src=<%= author.avatar %> alt="Your photo" class="avatar__img">
+            </div>
             <div class="reply__body">
                 <p class="comment__username"><%= author.name %></p>
-                <p class="reaply__to"><i class="fas fa-reply"></i> <%= to %></p>
-                <p class="comment__time"><i class="far fa-clock fa-sm"></i> <span><%= created_at.slice(0, 10) %></span> at <span><%= created_at.slice(12, 16) %></span></p>
+                <p class="reply__to"><i class="fas fa-reply"></i> <%= to %></p>
+                <p class="comment__time"><i class="far fa-clock fa-sm"></i> <span><%= created_at.slice(0, 10) %></span> at <span><%= created_at.slice(12, 16) %></span></p><button class="additional-btn deleteBtn" id=<%= id + 'Delete' %>><i class="fas fa-times"  ></i> Delete</button>
                 <p class="comment__text"><%= content %></p>
-            </div>
-            <div class="comment__btnblock">
-                <button class="additional-btn deleteBtn" id=<%= id + 'Delete' %>><i class="fas fa-times"  ></i> Delete</button>
             </div>
         </div>
     </script>
@@ -88,17 +88,17 @@
                 <p class="comment__time"><i class="far fa-clock fa-sm"></i> <span><%= created_at.slice(0, 10) %></span> at <span><%= created_at.slice(12, 16) %></span></p>
                 <p class="comment__text"><%= content %></p>
                 <div class="comment__btnblock">
-                    <button class="additional-btn editBtn" id=<%= id + 'Edit' %>><i class="far fa-edit" ></i> Edit</button>
-                    <button class="additional-btn deleteBtn" id=<%= id + 'Delete' %>><i class="fas fa-times"  ></i> Delete</button>
-                    <button class="additional-btn replyBtn" id=<%= id + 'replyTo' %> > <i class="fas fa-reply"></i> Reply</button>
+                    <button class="additional-btn editBtn" id=<%= id + 'Edit' %>><i class="far fa-edit fa-sm" ></i> Edit</button>
+                    <button class="additional-btn deleteBtn" id=<%= id + 'Delete' %>><i class="fas fa-times fa-sm"  ></i> Delete</button>
+                    <button class="additional-btn replyBtn" id=<%= id + 'replyTo' %> > <i class="fas fa-reply fa-sm"></i> Reply</button>
                 </div>
 
                 <div class="add-reply-block" id=<%= id + 'addreplyTo' %>>
-                    <div class="add-reaply-block__header">
+                    <div class="add-reply-block__header">
                         <p class="reply__to" id = <%= id + 'author' %> ><i class="fas fa-reply"></i> <%= author.name %></p>
-                        <button class="additional-btn cancelReplyBtn" id=<%= id + 'cancelReply' %>>Cancel</button> 
+                        <button class="additional-btn cancelReplyBtn" id=<%= id + 'cancelReply' %>><i class="fas fa-times fa-sm"  ></i>  Cancel</button> 
                     </div>
-                    <textarea name="add-comment" id=<%= id + 'addReply' %> cols="30" rows="3" class="leave-comment__textarea" ></textarea>
+                    <textarea name="add-comment" id=<%= id + 'addReply' %> cols="30" rows="3" class="leave-comment__textarea" placeholder="Your message" ></textarea>
                     <button class="btn addCommentBtn" id=<%= id + 'sendReply' %> > Send</button>
                 </div>
 
@@ -111,7 +111,7 @@
                     <button class="btn sendEditComment" id=<%= id + 'sendEdit' %> >Send</button>
                 </div>
 
-                <div class="replyes__container"><%= replyes %></div>
+                <div class="reply__container"><%= replyes %></div>
             </div>
         </div>
     </script>
