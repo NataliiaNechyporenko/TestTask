@@ -63,7 +63,7 @@ gulp.task('js', () => {
   .pipe(babel({
       presets: ['env']
   }))
-  // .pipe(uglify())
+  .pipe(uglify())
   .pipe(gulp.dest('./dist'))
   .pipe(browserSync.reload({
     stream: true
