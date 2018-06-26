@@ -8,8 +8,13 @@
 %secondary-text {
   color: $secondary-text;
   font-family: $text-font;
-  font-size: 15px;
-  line-height: 20px;
+  font-size: 13px;
+  line-height: 15px;
+
+  @media screen and (min-device-width: 1024px) {
+    font-size: 15px;
+    line-height: 20px;
+  }
 }
 
 .page-container {
@@ -34,7 +39,7 @@
   height: 100%;
   margin: -80px auto;
   max-width: 940px;
-  padding: 0 32px 40px 32px;
+  padding: 0 18px 40px 18px;
   position: relative;
   z-index: 99;
 
@@ -94,14 +99,18 @@
 
     &__img {
       border: 5px solid $theme-primary;
-      border-left: none;
       box-sizing: border-box;
       display: block;
       height: auto;
-      margin-left: -80px;
-      margin-right: 20px;
-      max-width: 376px;
-      float: left;
+
+      @media screen and (min-device-width: 615px) {
+        border-left: none;
+        margin-left: -80px;
+        margin-right: 20px;
+        max-width: 376px;
+        float: left;
+
+      }
     }
 
     &__info {
@@ -133,10 +142,10 @@
   border: 2px solid $third-grey;
   border-radius: 4px;
   display: block;
-  flex: 1 1 56px;
+  flex: 1 1 48px;
+  max-height: 48px;
+  max-width: 48px;
   margin-right: 8px;
-  max-height: 56px;
-  max-width: 56px;
   padding: 2px;
 
   &__img {
@@ -147,12 +156,23 @@
   }
 
   @media screen and (min-device-width: 1024px) {
+    display: block;
     flex: 1 1 88px;
-    margin-right: 22px;
     max-height: 88px;
     max-width: 88px;
   }
   }
+
+.leave-comment-avatar {
+  display: none;
+  @media screen and (min-device-width: 415px) and (max-device-width: 667px) {
+    display: block;
+  }
+
+  @media screen and (min-device-width: 1024px) {
+    display: block;
+  }
+}
 
 .reply-avatar {
   max-height: 50px;
@@ -238,13 +258,21 @@
 .comment {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 42px;
+  margin-bottom: 24px;
+
+  @media screen and (min-device-width: 668px) {
+    margin-bottom: 42px;
+  }
 
   &__body {
     display: flex;
     justify-content: flex-start;
-    flex: 8 1 300px;
+    flex: 8 1 200px;
     flex-wrap: wrap;
+
+    @media screen and (min-device-width: 668px) {
+      flex: 8 1 300px;
+    }
   }
 
   &__username {
@@ -308,8 +336,12 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: nowrap;
-    margin-bottom: 16px;
+    margin-bottom: 4px;
     width: 100%;
+
+    @media screen and (min-device-width: 668px) {
+      margin-bottom: 16px;
+    }
   }
 
   &__btn {
@@ -319,15 +351,23 @@
 
 .reply__to {
   @extend %secondary-text;
-  display: block;
+  display: none;
   padding-right: 17px;
   max-width: 300px;
+
+  @media screen and (min-device-width: 668px) {
+    display: block;
+  }
 }
 
 .reply {
   display: flex;
-  margin: 20px 0 32px 0;
+  margin: 20px 0;
   width: 100%;
+
+  @media screen and (min-device-width: 668px) {
+    margin: 20px 0 32px 0;
+  }
 
   &__body {
     display: flex;
