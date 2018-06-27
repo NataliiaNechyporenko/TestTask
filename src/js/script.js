@@ -114,17 +114,22 @@ const getComments = () => {
 
 function addComment(event) {
   let parentCommentId = parseInt(event.target.id);
+  console.log(parentCommentId);
   let newComment = {};
   let content = document.querySelector('#commentText').value;
-  let replyContent = document.getElementById(`${parentCommentId}addReply`).value;
-
+  let replyTextarea = document.getElementById(`${parentCommentId}addReply`);
+  let replyContent = '';
+  if (!isNaN(parentCommentId)) {
+    replyContent = replyTextarea.value;
+  };
+  
   if (content || replyContent) {
     newComment.headers = {
       'Content-Type': 'application/json'
     };
     newComment.method = "POST";
 
-    if (parentCommentId !== NaN) {
+    if (!isNaN(parentCommentId)) {
       newComment.body = JSON.stringify({
         "content": replyContent,
         "parent": parentCommentId,
@@ -145,7 +150,7 @@ function addComment(event) {
     })
     .then(getComments)
     .catch(err => {
-      console.error("Error: ", err);
+      console.error("Error: ", error);
     });
   };
 };
