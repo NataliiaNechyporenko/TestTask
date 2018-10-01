@@ -1,4 +1,4 @@
-const commentUrl = 'http://frontend-test.pingbull.com/pages/ns.nechyporenko@gmail.com/comments';
+const commentUrl = 'https://my-json-server.typicode.com/NataliiaNechyporenko/TestTask/comments';
 const comments = document.querySelector('.comments');
 let count = 5;
 let commentsData = [];
